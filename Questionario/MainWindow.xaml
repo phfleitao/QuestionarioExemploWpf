@@ -1,0 +1,38 @@
+﻿<Window x:Class="Questionario.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Questionario"
+        xmlns:viewModel="clr-namespace:Questionario.ViewModels"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Window.DataContext>
+        <viewModel:MainWindowViewModel/>
+    </Window.DataContext>
+    <StackPanel>
+        <ItemsControl Name="icQuiz" ItemsSource="{Binding Questions}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Text="{Binding Description}" />
+                        <ItemsControl Name="icAnswers" ItemsSource="{Binding Answers}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <RadioButton 
+                                        GroupName="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl},
+                                                    Path=DataContext.RadioGroupName}"
+                                        Content="{Binding Description}" 
+                                        IsChecked="{Binding IsSelected}"
+                                        />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        <Button Content="Mostrar Selecionados" Command="{Binding OnClick_MostrarSelecionados}"/>
+        <TextBlock Text="{Binding ItensSelecionados}" />
+    </StackPanel>
+</Window>
